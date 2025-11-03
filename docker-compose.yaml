@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: go-starter-postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: splitwise
+    ports:
+      # Map the host port 5432 to the container port 5432
+      - "5432:5432"
+    volumes:
+      # Persist database data on the host machine
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  # Define the named volume for persistence
+  postgres-data:
