@@ -1,4 +1,4 @@
-package database
+package internal
 
 import (
 	"context"
@@ -15,6 +15,8 @@ func NewConnection(databaseURL string) (*pgxpool.Pool, error) {
 	if databaseURL == "" {
 		return nil, fmt.Errorf("DATABASE_URL cannot be empty")
 	}
+
+	fmt.Println(databaseURL)
 
 	// Parse the connection string
 	config, err := pgxpool.ParseConfig(databaseURL)
