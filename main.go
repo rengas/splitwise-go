@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	database "splitwise-go/internal"
+
+	internal "splitwise-go/internal"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -32,7 +33,7 @@ func main() {
 	}
 
 	// 2. Connect to Postgres database
-	dbPool, err := database.NewConnection(databaseURL)
+	dbPool, err := internal.NewConnection(databaseURL)
 	if err != nil {
 		log.Fatalf("Could not connect to database: %v", err)
 	}
@@ -50,6 +51,10 @@ func main() {
 	// 4. Healthcheck route
 	// We pass the dbPool to the handler
 	r.Get("/health", healthCheckHandler(dbPool))
+
+	//Users route
+
+	r.Get("/users", internal.UsersPage(dbPool))
 
 	// 5. Start the server
 	log.Printf("Server starting on port %s", port)
